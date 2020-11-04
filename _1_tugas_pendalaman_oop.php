@@ -1,76 +1,105 @@
 <?php
 
-trait Hewan
+abstract class Hewan
 {
-    public $nama;
-    public $darah = 50;
-    public $jumlahKaki;
-    public $keahlian;
+    public $nama, $darah = 50, $jumlahKaki, $keahlian;
+
+    public function __construct($nama)
+    {
+        $this->nama = $nama;
+    }
 
     public function  atraksi()
     {
         return $this->nama . ' sedang ' . $this->keahlian;
     }
 
+    abstract public function getInfoHewan();
+
+    public function getInfo()
+    {
+        $str =  'Nama : ' . $this->nama;
+                'Darah : ' . $this->darah;
+                'Jumlah kaki : ' . $this->jumlahKaki;
+                'Keahlian : ' . $this->keahlian;
+        return $str;
+    }
+
 }
 
 trait Fight
 {
-    public $attackPower;
-    public $defencePower;
+    public $attackPower, $defencePower;
 
     public function serang($hewan)
     {
-        return $this->nama . ' menyerang ' . $hewan->nama;
+        echo $this->nama . ' sedang menyerang ' . $hewan->nama . '\n';
+        echo '=================================' . '\n';;
     }
 
     public function diserang($hewan)
     {
-        $this->darah = $this->darah - ($this->attackPower / $this->defencePower);
-        return $this->nama . ' diserang ' . $hewan->nama;
+        $this->darah = $this->darah - ($hewan->attackPower / $this->defencePower);
+        
+        echo $this->nama . ' sedang diserang ' . $hewan->nama . '\n';
+        echo 'Darah ' . $this->nama . ' tersisa : ' . $this->darah . '\n';
     }
 }
 
 
-class Elang
+class Elang extends Hewan
 {
-    use Hewan;
     use Fight;
+
+    public function __construct($nama)
+    {
+        parent::__construct($nama);
+        $this->jumlahKaki = 2;
+        $this->keahlian = 'terbang tinggi';
+        $this->attackPower = 10;
+        $this->defensePower = 5;
+    }
 
     public function getInfoHewan()
     {
-        return $this->nama . ' memiliki jumlah kaki ' . $this->jumlahKaki . ' dan mempunyai keahliah ' . $this->keahlian;
+        $str =  '======ELANG======' . "\n";
+                parent::getInfo() . "\n";
+                'Attach power : ' . $this->attackPower . "\n";
+                'Defense power : ' . $this->defensePower . "\n";
+        return $str;
     }
 
 }
 
-class Harimau
+class Harimau extends Hewan
 {
-    use Hewan;
     use Fight;
+
+    public function __construct($nama)
+    {
+        parent::__construct($nama);
+        $this->jumlahKaki = 4;
+        $this->keahlian = 'lari cepat';
+        $this->attackPower = 7;
+        $this->defensePower = 8;
+    }
 
     public function getInfoHewan()
     {
-        return $this->nama . ' memiliki jumlah kaki ' . $this->jumlahKaki . ' dan mempunyai keahliah ' . $this->keahlian; 
+        $str =  '======HARIMAU======' . "\n";
+                parent::getInfo() . "\n";
+                'Attach power : ' . $this->attackPower . "\n";
+                'Defense power : ' . $this->defensePower . "\n";
+        return $str;
     }
 }
 
 
-$elang = new Elang();
-$elang->nama = 'Elang';
-$elang->jumlahKaki = 2;
-$elang->keahlian = 'terbang tinggi';
-$elang->attackPower = 10;
-$elang->defencePower = 5;
+$elang = new Elang('Elang Sumatra');
 echo $elang->getInfoHewan();
 echo '<br>';
 
-$harimau = new Harimau();
-$harimau->nama = 'Harimau';
-$harimau->jumlahKaki = 4;
-$harimau->keahlian = 'lari cepat';
-$harimau->attackPower = 7;
-$harimau->deffencePower = 8;
+$harimau = new Harimau('Harimau Jawa');
 echo $harimau->getInfoHewan();
 echo '<br>';
 
