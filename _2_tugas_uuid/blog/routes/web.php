@@ -15,4 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('/otp', 'OtpController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/route-1', function () {
+    return 'ini route satu';
+})->middleware('emailVerification');
+
+Route::get('/route-2', function () {
+    return 'ini route 2';
+})->middleware('admin');

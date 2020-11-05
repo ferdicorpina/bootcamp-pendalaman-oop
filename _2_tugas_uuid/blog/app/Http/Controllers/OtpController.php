@@ -15,7 +15,7 @@ class OtpController extends Controller
      */
     public function index()
     {
-        //
+        dd(Auth::user());
     }
 
     /**
